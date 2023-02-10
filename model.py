@@ -1,6 +1,20 @@
 import torch 
 from torch import nn
 
+
+
+def smooth_label(tensor, offset):
+	return tensor + offset
+
+
+def weights_init(m):
+	classname = m.__class__.__name__
+	if classname.find('Conv') != -1:
+		m.weight.data.normal_(0.0, 0.02)
+	elif classname.find('BatchNorm') != -1:
+		m.weight.data.normal_(1.0, 0.02)
+		m.bias.data.fill_(0)
+
 # Concat embedding
 class concat_embed(nn.Module):
 	def __init__(self,embedding_dim , project_dim):
@@ -15,7 +29,7 @@ class concat_embed(nn.Module):
 	def forward(self,image_features,text_embedding):
 		
 		projected_embedding = self.projection(text_embedding)
-		replicated_embed    = projected_embed.repeat(4, 4, 1, 1).permute(2,  3, 0, 1)
+		replicated_embed    = projected_embedding.repeat(4, 4, 1, 1).permute(2,  3, 0, 1)
         
         
 

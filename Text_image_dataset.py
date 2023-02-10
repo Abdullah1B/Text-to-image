@@ -49,7 +49,7 @@ class Text_image_dataset(torch.utils.data.Dataset):
                             text,
                             add_special_tokens = True,
                             max_length = max_len, 
-                            padding = 'max_lenght'
+                            padding = 'max_length'
                         )
 
         input_ids = tokenized_text['input_ids']
@@ -74,7 +74,7 @@ class Text_image_dataset(torch.utils.data.Dataset):
 
         resize = tr.Resize([self.image_size,self.image_size])
         
-        right_image = read_image(self.file_names[self.list_keys[index]]) # tensor of the image 
+        right_image = read_image(self.image_dir+self.file_names[self.list_keys[index]]) # tensor of the image 
         right_image = resize(right_image)
         right_image = (right_image - 127.5) / 127.5 # normlize the image from [0,255] to [-1,1]
 
@@ -82,7 +82,7 @@ class Text_image_dataset(torch.utils.data.Dataset):
         if random_index == index:
             random_index = np.random.randint(0,self.__len__() - 1)
 
-        wrong_image = read_image(self.file_names[self.list_keys[random_index]])
+        wrong_image = read_image(self.image_dir+self.file_names[self.list_keys[random_index]])
         wrong_image = resize(wrong_image)
         wrong_image = (wrong_image - 127.5) / 127.5
 
