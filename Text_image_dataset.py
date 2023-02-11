@@ -64,7 +64,7 @@ class Text_image_dataset(torch.utils.data.Dataset):
     def __getitem__(self,index):
 
         transform = tr.Compose([
-                tr.CenterCrop(self.image_size),
+                tr.CenterCrop(580),
                 tr.Resize([self.image_size,self.image_size]),
             ])
         

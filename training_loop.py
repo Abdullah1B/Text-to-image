@@ -32,8 +32,8 @@ disc_opt = torch.optim.Adam(discriminator.parameters(),lr=cfg.LR_disc,betas=(cfg
 test_data = ds(image_dir=cfg.IMAGE_DIR_TEST,cap_dir=cfg.CAPTION_DIR_TEST,image_size=cfg.IMAGE_SIZE)
 test_loader = DataLoader(test_data,batch_size=cfg.BATCH_SIZE)
 batch = next(iter(test_loader))
-test_embeddings = batch['text_embedding']
-fixed_noise = torch.randn(test_embeddings.size(0),cfg.NOISE_DIM)
+test_embeddings = batch['text_embedding'].to(cfg.DEVICE)
+fixed_noise = torch.randn(test_embeddings.size(0),cfg.NOISE_DIM).to(cfg.DEVICE)
 fixed_noise = fixed_noise.view(fixed_noise.size(0),cfg.NOISE_DIM,1,1)
 
 BCE_loss = torch.nn.BCELoss()
@@ -71,7 +71,7 @@ def train():
             scores,_ = discriminator(wrong_images,text_embedding)
             wrong_loss = BCE_loss(scores,fake_labels)
 
-            noise = torch.randn(real_image.size(0),cfg.NOISE_DIM)
+            noise = torch.randn(real_image.size(0),cfg.NOISE_DIM).to(cfg.DEVICE)
             noise = noise.view(noise.size(0),cfg.NOISE_DIM,1,1)
         
             fake_images = generator(text_embedding,noise)
@@ -122,7 +122,7 @@ def train():
                 step += 1
 
 
-# train()
+train()
 
 def generate(text):
     pass
