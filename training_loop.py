@@ -122,4 +122,7 @@ def train():
                 step += 1
 
 
-train()
+# train()
+
+def generate(text):
+    pass
