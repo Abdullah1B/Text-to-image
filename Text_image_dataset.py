@@ -63,7 +63,6 @@ class Text_image_dataset(torch.utils.data.Dataset):
 
     def __getitem__(self,index):
 
-        # resize = tr.Resize([self.image_size,self.image_size])
         transform = tr.Compose([
                 tr.CenterCrop(self.image_size),
                 tr.Resize([self.image_size,self.image_size]),
@@ -81,7 +80,7 @@ class Text_image_dataset(torch.utils.data.Dataset):
         wrong_image = transform(wrong_image)
         wrong_image = (wrong_image - 127.5) / 127.5
 
-        text_embedding = self.get_text_embedding(self.captions[index])
+        text_embedding = self.get_text_embedding(self.captions[index].replace(',',' '))
 
         sample = {
 
