@@ -56,9 +56,9 @@ class Generator(nn.Module):
         )
         self.generator = nn.Sequential(
             self.Upsample_block(self.project_dim+self.noise_d,self.features_num * 8,kernel_size=4,stride=1,padding=0),
-            self.Upsample_block(self.features_num * 8 ,self.features_num * 4,kernel_size=4,stride=1,padding=0),
-            self.Upsample_block(self.features_num * 4 ,self.features_num * 2,kernel_size=4,stride=1,padding=0),
-            self.Upsample_block(self.features_num * 2 ,self.features_num,kernel_size=4,stride=1,padding=0),
+            self.Upsample_block(self.features_num * 8 ,self.features_num * 4,kernel_size=4,stride=2,padding=1),
+            self.Upsample_block(self.features_num * 4 ,self.features_num * 2,kernel_size=4,stride=2,padding=1),
+            self.Upsample_block(self.features_num * 2 ,self.features_num,kernel_size=4,stride=2,padding=1),
             nn.ConvTranspose2d(in_channels=self.features_num,out_channels=self.channels,kernel_size=4,stride=2,padding=1,bias=False),
             nn.Tanh()
         )

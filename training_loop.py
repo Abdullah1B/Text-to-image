@@ -7,6 +7,9 @@ import config as cfg
 from torch.utils.data import DataLoader
 from Text_image_dataset import Text_image_dataset as ds
 from model import *
+import matplotlib.pyplot as plt
+from torchvision.utils import make_grid
+
 
 torch.manual_seed(0) 
 
@@ -42,7 +45,7 @@ l1_loss  = torch.nn.L1Loss  ()
 
 fake_writer = SummaryWriter('C:\\Users\\AJBas\\Desktop\\Project\\Text-to-image\\logs\\fake')
 real_writer = SummaryWriter('C:\\Users\\AJBas\\Desktop\\Project\\Text-to-image\\logs\\real')
-def train():
+def train(train_on_notebook = False):
     step = 0
 
     for epoch in range(cfg.EPOCHS):
@@ -116,13 +119,29 @@ def train():
 
                     img_real = torchvision.utils.make_grid(real_image[:32],normalize=True)
                     img_fake = torchvision.utils.make_grid(fake_images_test[:32],normalize=True)
-
+                    if train_on_notebook:
+                        show_tensor_images(fake_images_test)
                     real_writer.add_image('real',img_real,global_step=step)
                     fake_writer.add_image('Fake',img_fake,global_step=step)
                 step += 1
 
 
-train()
+def show_tensor_images(image_tensor, num_images=25, size=(3, 64, 64)):
+    '''
+    Function for visualizing images: Given a tensor of images, number of images, and
+    size per image, plots and prints the images in an uniform grid.
+    '''
+    plt.figure(figsize=[8, 8])
+
+    image_tensor = (image_tensor + 1) / 2
+    image_unflat = image_tensor.detach().cpu()
+    image_grid   = make_grid(image_unflat[:num_images], nrow=5)
+    
+    plt.imshow(image_grid.permute(1, 2, 0).squeeze())
+    plt.show()
+
+# train()
+
 
 def generate(text):
     pass
