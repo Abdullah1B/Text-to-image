@@ -140,7 +140,7 @@ def show_tensor_images(image_tensor, num_images=25, size=(3, 64, 64)):
     plt.imshow(image_grid.permute(1, 2, 0).squeeze())
     plt.show()
 
-# train()
+train()
 
 
 def generate(text):
