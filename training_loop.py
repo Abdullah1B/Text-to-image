@@ -92,7 +92,7 @@ def train(train_on_notebook = False):
 
             generator.zero_grad()
 
-            noise = torch.randn(real_image.size(0),cfg.NOISE_DIM)
+            noise = torch.randn(real_image.size(0),cfg.NOISE_DIM).to(cfg.DEVICE)
             noise = noise.view(noise.size(0),cfg.NOISE_DIM,1,1)
 
             fake_images = generator(text_embedding,noise)
