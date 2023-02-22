@@ -162,10 +162,10 @@ class training_loop():
         if use_pre_train:
             if use_128:
                 gen = Gen_128()
-                gen.load_state_dict(path_model)
+                gen.load_state_dict(torch.load(path_model,map_location=cfg.DEVICE))
             else:
                 gen = Generator()
-                gen.load_state_dict(path_model)
+                gen.load_state_dict(torch.load(path_model,map_location=cfg.DEVICE))
                 
         gen = self.generator
         gen.eval()

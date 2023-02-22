@@ -67,8 +67,8 @@ class Text_image_dataset(torch.utils.data.Dataset):
                 tr.CenterCrop(580),
                 tr.Resize([self.image_size,self.image_size]),
             ])
-        
-        right_image = read_image(self.image_dir+self.file_names[index]) # tensor of the image 
+        file_name = self.file_names[index].split('.')[0]
+        right_image = read_image(self.image_dir+file_name+'.jpg') # tensor of the image 
         right_image = transform(right_image)
         right_image = (right_image - 127.5) / 127.5 # normlize the image from [0,255] to [-1,1]
 
@@ -76,7 +76,8 @@ class Text_image_dataset(torch.utils.data.Dataset):
         if random_index == index:
             random_index = np.random.randint(0,self.__len__() - 1)
 
-        wrong_image = read_image(self.image_dir+self.file_names[random_index])
+        file_name = self.file_names[random_index].split('.')[0]
+        wrong_image = read_image(self.image_dir+file_name+'.jpg')
         wrong_image = transform(wrong_image)
         wrong_image = (wrong_image - 127.5) / 127.5
 

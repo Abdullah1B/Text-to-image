@@ -27,9 +27,9 @@ def frechet_distance(mu_x, mu_y, sigma_x, sigma_y):
 	return (mu_x - mu_y).dot(mu_x - mu_y) + torch.trace(sigma_x) + torch.trace(sigma_y) - 2 * torch.trace(matrix_sqrt(np.matmul(sigma_x,sigma_y)))
 
 
-def get_FID(dataLoader,gen_model,n_samples = 400,z_dim = 100):
+def get_FID(dataLoader,gen_model,inception_model = '',n_samples = 400,z_dim = 100):
 	
-	inception = load_inception_model()
+	inception = load_inception_model(inception_model)
 
 	fake_list = []
 	real_list = []
