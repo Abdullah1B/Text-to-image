@@ -67,7 +67,7 @@ class Generator(nn.Module):
         return nn.Sequential(
             nn.ConvTranspose2d(in_channels,out_channels,kernel_size,stride,padding,bias=False),
             nn.BatchNorm2d(out_channels),
-            nn.LeakyReLU(negative_slope=0.2, inplace=True))
+            nn.ReLU(True))
     
     def forward(self, text_vec, noise):
 
