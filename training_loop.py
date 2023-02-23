@@ -158,7 +158,7 @@ class training_loop():
 
 
 
-    def generate(self,text,path_model = "path/pre_trained",use_pre_train = False,use_128 = False):
+    def generate(self,text,path_model = "path/pre_trained",use_pre_train = False,use_128 = False,fig_size=6):
         if use_pre_train:
             if use_128:
                 gen = Gen_128()
@@ -166,8 +166,8 @@ class training_loop():
             else:
                 gen = Generator()
                 gen.load_state_dict(torch.load(path_model,map_location=cfg.DEVICE))
-                
-        gen = self.generator
+        else:
+            gen = self.generator
         gen.eval()
         text = text.replace(',',' ')
         text_embedding = self.training_dataset.get_text_embedding(text)
@@ -180,6 +180,6 @@ class training_loop():
         with torch.no_grad():
             fake_image = gen(text_embedding,noise)
 
-        self.show_tensor_images(fake_image,fig_size=6)
+        self.show_tensor_images(fake_image,fig_size=fig_size)
         gen.train()
         return fake_image 
