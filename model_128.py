@@ -2,8 +2,8 @@ import torch
 from torch import nn
 
 
-def smooth_label(tensor, offset):
-    return tensor + offset
+def One_sided_label_smoothing(tensor, smooth_by):
+    return tensor + smooth_by
 
 
 def weights_init(m):
