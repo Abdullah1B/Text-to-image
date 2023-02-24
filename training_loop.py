@@ -76,7 +76,7 @@ class training_loop():
                 real_labels = torch.ones(real_image.size(0),device=cfg.DEVICE)
                 fake_labels = torch.zeros(real_image.size(0),device=cfg.DEVICE)
 
-                smoothed_real_labels = torch.FloatTensor(smooth_label(real_labels.cpu().numpy(), -0.1))
+                smoothed_real_labels = torch.FloatTensor(One_sided_label_smoothing(real_labels.cpu().numpy(), -0.1))
             
                 real_labels = real_labels.to(cfg.DEVICE)
                 smoothed_real_labels = smoothed_real_labels.to(cfg.DEVICE)
